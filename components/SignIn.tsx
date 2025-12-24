@@ -33,6 +33,7 @@ import { Loader2 } from "lucide-react"
 import Link from "next/link"
 import { authClient } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
+import { Separator } from "./ui/separator"
 
 const formSchema = z.object({
   email: z
@@ -69,6 +70,19 @@ export function SignInForm() {
     } catch (error) {
         throw new Error("Some thing want wrong!!!")
     }
+  }
+  const SignInWithGoogle=async()=>{
+    await authClient.signIn.social({
+      provider:"google",
+      callbackURL:"/"
+    })
+  }
+
+  const SignInWithGithub=async()=>{
+    await authClient.signIn.social({
+      provider:"github",
+      callbackURL:"/",
+    })
   }
 
   return (
@@ -125,7 +139,7 @@ export function SignInForm() {
           </FieldGroup>
         </form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col">
         <Field orientation="horizontal" className="w-full flex items-center justify-between">
          <div>
              <Button type="button" variant="outline" onClick={() => form.reset()}>
@@ -139,8 +153,20 @@ export function SignInForm() {
          </div>
          
             <p className="text-sm flex items-center mr-2">Have not an acount? Please <Link href="/sign_up" className="text-sky-600">Sign Up</Link></p>
-        
         </Field>
+        <div className="flex flex-col items-center justify-center w-full my-4">
+          <p className="text-sm animate-ping text-pink-400">OR</p>
+        <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent"/>
+        </div>
+        <div className="flex flex-col gap-4 mt-4 w-full">
+          <Button type="button" className="text-sm cursor-pointer bg-sky-800" onClick={SignInWithGoogle}>
+          Continue with google
+        </Button>
+        <Button type="button" className="text-sm cursor-pointer bg-sky-800" onClick={SignInWithGithub}>
+          Continue with Github
+        </Button>
+        </div>
+        <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent"/>
       </CardFooter>
     </Card>
   )
