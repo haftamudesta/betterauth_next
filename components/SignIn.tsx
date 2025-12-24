@@ -32,6 +32,7 @@ import {
 import { Loader2 } from "lucide-react"
 import Link from "next/link"
 import { authClient } from "@/lib/auth-client"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   email: z
@@ -40,6 +41,7 @@ const formSchema = z.object({
 })
 
 export function SignInForm() {
+    const router=useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,6 +59,7 @@ export function SignInForm() {
         {
             onSuccess:async()=>{
             toast.success("Loged In successfully")
+            router.push("/")
         },
         onError:(ctx)=>{
             toast(ctx.error.message)

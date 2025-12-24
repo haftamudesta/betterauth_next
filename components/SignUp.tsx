@@ -25,6 +25,7 @@ import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 import Link from "next/link"
 import { authClient } from "@/lib/auth-client"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -37,6 +38,7 @@ const formSchema = z.object({
 })
 
 export function SignUpForm() {
+    const router=useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -56,6 +58,7 @@ export function SignUpForm() {
       }, {
         onSuccess: async () => {
           toast.success("Signed up successfully")
+          router.push("/sign_in")
         },
         onError: (ctx) => {
           toast.error(ctx.error.message || "An error occurred")
@@ -63,7 +66,6 @@ export function SignUpForm() {
       })
     } catch (error) {
       toast.error("Something went wrong!")
-      console.error(error)
     }
   }
 
