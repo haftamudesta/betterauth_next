@@ -57,7 +57,8 @@ export function SignUpForm() {
 
   async function  onSubmit(data: z.infer<typeof formSchema>) {
     try {
-        await authClient.signIn.email({
+        await authClient.signUp.email({
+            name:data.name,
             email:data.email,
             password:data.password
         },
@@ -163,8 +164,7 @@ export function SignUpForm() {
                   )}
                 </Field>
               )}
-            />
-           
+            />  
           </FieldGroup>
         </form>
       </CardContent>
