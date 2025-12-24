@@ -17,67 +17,60 @@ import {
 } from "@/components/ui/card"
 import {
   Field,
-  FieldDescription,
-  FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
+import { FieldError } from "@/components/ui/field" // Make sure this import is correct
 import { Input } from "@/components/ui/input"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
 import { Loader2 } from "lucide-react"
 import Link from "next/link"
 import { authClient } from "@/lib/auth-client"
 
 const formSchema = z.object({
-    name:z.string().min(3,"Please Enter a valid name"),
-  email: z
-    .email("Please enter a valid email"),
-  password:z.string().min(8,"Enter valid password"),
-  confirmPassword:z.string() 
-}).refine(data=>data.password===data.confirmPassword,{
-    message:"Password do not match",
-    path:["confirmPassword"]
+  name: z.string().min(3, "Name must be at least 3 characters"),
+  email: z.string().email("Please enter a valid email"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+  confirmPassword: z.string()
+}).refine(data => data.password === data.confirmPassword, {
+  message: "Passwords do not match",
+  path: ["confirmPassword"]
 })
 
 export function SignUpForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name:"",
+      name: "",
       email: "",
-      password:"",
-      confirmPassword:""
+      password: "",
+      confirmPassword: ""
     },
   })
 
-  async function  onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
-        await authClient.signUp.email({
-            name:data.name,
-            email:data.email,
-            password:data.password
+      await authClient.signUp.email({
+        name: data.name,
+        email: data.email,
+        password: data.password
+      }, {
+        onSuccess: async () => {
+          toast.success("Signed up successfully")
         },
-        {
-            onSuccess:async()=>{
-            toast.success("Loged In successfully")
-        },
-        onError:(ctx)=>{
-            toast(ctx.error.message)
+        onError: (ctx) => {
+          toast.error(ctx.error.message || "An error occurred")
         }
-        }
-    )
+      })
     } catch (error) {
-        throw new Error("Some thing want wrong!!!")
+      toast.error("Something went wrong!")
+      console.error(error)
     }
   }
 
+  const isLoading = form.formState.isSubmitting
+
   return (
-    <Card className="w-full sm:max-w-md ">
+    <Card className="w-full sm:max-w-md">
       <CardHeader>
         <CardTitle>Sign Up</CardTitle>
         <CardDescription>
@@ -86,22 +79,23 @@ export function SignUpForm() {
       </CardHeader>
       <CardContent>
         <form id="sign-up-form" onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup>
+          <FieldGroup className="space-y-4">
             <Controller
               name="name"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
+                <Field>
                   <FieldLabel>
-                   Name
+                    Name
                   </FieldLabel>
                   <Input
                     {...field}
-                    autoComplete="off"
+                    placeholder="Enter your name"
+                    autoComplete="name"
                     aria-invalid={fieldState.invalid}
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                  {fieldState.error && (
+                    <FieldError>{fieldState.error.message}</FieldError>
                   )}
                 </Field>
               )}
@@ -110,17 +104,19 @@ export function SignUpForm() {
               name="email"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
+                <Field>
                   <FieldLabel>
-                   Email
+                    Email
                   </FieldLabel>
                   <Input
                     {...field}
-                    autoComplete="off"
+                    type="email"
+                    placeholder="Enter your email"
+                    autoComplete="email"
                     aria-invalid={fieldState.invalid}
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                  {fieldState.error && (
+                    <FieldError>{fieldState.error.message}</FieldError>
                   )}
                 </Field>
               )}
@@ -129,18 +125,19 @@ export function SignUpForm() {
               name="password"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
+                <Field>
                   <FieldLabel>
-                   Password
+                    Password
                   </FieldLabel>
                   <Input
                     {...field}
-                    autoComplete="off"
-                    aria-invalid={fieldState.invalid}
                     type="password"
+                    placeholder="Enter your password"
+                    autoComplete="new-password"
+                    aria-invalid={fieldState.invalid}
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                  {fieldState.error && (
+                    <FieldError>{fieldState.error.message}</FieldError>
                   )}
                 </Field>
               )}
@@ -149,40 +146,59 @@ export function SignUpForm() {
               name="confirmPassword"
               control={form.control}
               render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
+                <Field>
                   <FieldLabel>
-                   Confirm Password
+                    Confirm Password
                   </FieldLabel>
                   <Input
                     {...field}
-                    autoComplete="off"
-                    aria-invalid={fieldState.invalid}
                     type="password"
+                    placeholder="Confirm your password"
+                    autoComplete="new-password"
+                    aria-invalid={fieldState.invalid}
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
+                  {fieldState.error && (
+                    <FieldError>{fieldState.error.message}</FieldError>
                   )}
                 </Field>
               )}
-            />  
+            />
           </FieldGroup>
         </form>
       </CardContent>
-      <CardFooter>
-        <Field orientation="horizontal" className="w-full flex items-center justify-between">
-         <div>
-             <Button type="button" variant="outline" onClick={() => form.reset()}>
+      <CardFooter className="flex flex-col space-y-4">
+        <div className="flex items-center justify-between w-full">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => form.reset()}
+            disabled={isLoading}
+          >
             Reset
           </Button>
-          <Button type="submit" form="form-rhf-demo">
-            {form.formState.isSubmitting?(
-                <Loader2 className="size-4" />
-            ):("Sign In")}
+          <Button
+            type="submit"
+            form="sign-up-form"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing up...
+              </>
+            ) : (
+              "Sign Up"
+            )}
           </Button>
-         </div>
-            <p className="text-sm flex items-center mr-2">Already Have an acount? Please <Link href="/sign_in" className="text-sky-600">Sign In</Link></p>
-        
-        </Field>
+        </div>
+        <div className="text-center w-full">
+          <p className="text-sm">
+            Have an account?{" "}
+            <Link href="/sign_in" className="text-sky-600 hover:text-sky-700 underline">
+              Sign In
+            </Link>
+          </p>
+        </div>
       </CardFooter>
     </Card>
   )
