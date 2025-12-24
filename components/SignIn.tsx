@@ -71,6 +71,7 @@ export function SignInForm() {
         throw new Error("Some thing want wrong!!!")
     }
   }
+  const isLoading = form.formState.isSubmitting
   const SignInWithGoogle=async()=>{
     await authClient.signIn.social({
       provider:"google",
@@ -140,20 +141,39 @@ export function SignInForm() {
         </form>
       </CardContent>
       <CardFooter className="flex flex-col">
-        <Field orientation="horizontal" className="w-full flex items-center justify-between">
-         <div>
-             <Button type="button" variant="outline" onClick={() => form.reset()}>
+           <div className="flex items-center justify-between w-full">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => form.reset()}
+            disabled={isLoading}
+          >
             Reset
           </Button>
-          <Button type="submit" form="form-rhf-demo">
-            {form.formState.isSubmitting?(
-                <Loader2 className="size-4" />
-            ):("Sign In")}
+          <Button
+            type="submit"
+            form="sign-up-form"
+            disabled={isLoading}
+            className="cursor-pointer"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing In...
+              </>
+            ) : (
+              "Sign In"
+            )}
           </Button>
-         </div>
-         
-            <p className="text-sm flex items-center mr-2">Have not an acount? Please <Link href="/sign_up" className="text-sky-600">Sign Up</Link></p>
-        </Field>
+        </div>
+        <div className="text-center w-full gap-4">
+          <p className="text-sm gap-4">
+            Have not an account?{" "}
+            <Link href="/sign_up" className="text-sky-600 hover:text-sky-700 underline">
+              Sign Up
+            </Link>
+          </p>
+        </div>
         <div className="flex flex-col items-center justify-center w-full my-4">
           <p className="text-sm animate-ping text-pink-400">OR</p>
         <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent"/>

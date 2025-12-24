@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
+import { Separator } from "./ui/separator"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -70,6 +71,19 @@ export function SignUpForm() {
   }
 
   const isLoading = form.formState.isSubmitting
+  const SignInWithGoogle=async()=>{
+      await authClient.signIn.social({
+        provider:"google",
+        callbackURL:"/"
+      })
+    }
+  
+    const SignInWithGithub=async()=>{
+      await authClient.signIn.social({
+        provider:"github",
+        callbackURL:"/",
+      })
+    }
 
   return (
     <Card className="w-full sm:max-w-md">
@@ -81,7 +95,7 @@ export function SignUpForm() {
       </CardHeader>
       <CardContent>
         <form id="sign-up-form" onSubmit={form.handleSubmit(onSubmit)}>
-          <FieldGroup className="space-y-4">
+          <FieldGroup>
             <Controller
               name="name"
               control={form.control}
@@ -168,7 +182,7 @@ export function SignUpForm() {
           </FieldGroup>
         </form>
       </CardContent>
-      <CardFooter className="flex flex-col space-y-4">
+      <CardFooter className="flex flex-col ">
         <div className="flex items-center justify-between w-full">
           <Button
             type="button"
@@ -185,7 +199,7 @@ export function SignUpForm() {
           >
             {isLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2 className="mr-2 h-2 w-4 animate-spin" />
                 Signing up...
               </>
             ) : (
@@ -195,11 +209,23 @@ export function SignUpForm() {
         </div>
         <div className="text-center w-full">
           <p className="text-sm">
-            Have an account?{" "}
+            Already Have an account?{" "}
             <Link href="/sign_in" className="text-sky-600 hover:text-sky-700 underline">
               Sign In
             </Link>
           </p>
+        </div>
+        <div className="flex flex-col items-center justify-center w-full my-1">
+          <p className="text-sm animate-ping text-pink-400">OR</p>
+        <Separator className="my-1 h-2! bg-gradient-to-r from-transparent via-gray-300 to-transparent"/>
+        </div>
+        <div className="flex flex-col gap-2 mt-2 w-full">
+          <Button type="button" className="text-sm cursor-pointer bg-sky-800" onClick={SignInWithGoogle}>
+          Continue with google
+        </Button>
+        <Button type="button" className="text-sm cursor-pointer bg-sky-800" onClick={SignInWithGithub}>
+          Continue with Github
+        </Button>
         </div>
       </CardFooter>
     </Card>
