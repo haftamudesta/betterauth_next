@@ -17,7 +17,7 @@ interface verificationEmailProps {
   appName?:string
 }
 
-
+console.log("test")
 export const VerificationEmail = ({
   verificationUrl,userName,appName="Better Auth"
 }: verificationEmailProps) => (
