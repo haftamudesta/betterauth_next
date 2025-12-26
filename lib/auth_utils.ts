@@ -1,5 +1,6 @@
 import { headers } from "next/headers"
 import { auth } from "./auth"
+import { redirect } from "next/navigation"
 
 
 export const authSession=async()=>{
@@ -15,3 +16,17 @@ export const authSession=async()=>{
     }
 }
 
+export const authIsRequired=async()=>{
+    const session=await authSession();
+    if(!session){
+        redirect("/sign_in")
+    }
+    return session;
+}
+
+export const authIsNotRequired=async()=>{
+    const session=await authSession();
+    if(session){
+        redirect("/")
+    }
+}
