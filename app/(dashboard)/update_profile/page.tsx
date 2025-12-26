@@ -11,7 +11,7 @@ export default async function updateProfilePage(){
         return redirect("/sign_in")
     }
     return(
-        <main className="w-full p-6 shadow-2xl rounded-2xl h-full flex gap-6">
+        <main className="w-full min-h-screen p-6 shadow-2xl rounded-2xl h-full flex gap-6 items-center justify-center">
             <UpdateProfile name={user.name} email={user.email} image={user.image||""} twoFactorEnabled={user.twoFactorEnabled??false}/>
             <ChangePasswordForm />
         </main>

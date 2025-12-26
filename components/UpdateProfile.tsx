@@ -71,7 +71,7 @@ export function UpdateProfile({name,email,image}:updateProfileProps) {
   const isLoading = form.formState.isSubmitting
   
   return (
-    <Card className="w-full max-w-sm border-0 shadow-none">
+    <Card className="w-full min-h-screen max-w-sm border-0 shadow-none">
       <CardHeader>
         <CardTitle>Update Your Profile</CardTitle>
       </CardHeader>
@@ -142,7 +142,8 @@ export function UpdateProfile({name,email,image}:updateProfileProps) {
             type="submit"
             form="sign-up-form"
             disabled={isLoading}
-            className="cursor-pointer"
+            className="cursor-pointer mt-4 bg-sky-600 w-full"
+            
             >
                 {isLoading ? (
                     <>

@@ -79,7 +79,7 @@ export function ChangePasswordForm() {
   
 const isLoading = form.formState.isSubmitting
   return (
-    <Card className="w-full sm:max-w-md ">
+    <Card className="w-full min-h-screen sm:max-w-md ">
       <CardHeader>
         <CardTitle>Change Your Password</CardTitle>
       </CardHeader>

@@ -28,7 +28,7 @@ export default function UploadImage({defaultUrl,onChange,endpoint}:uploadImagePr
             </div>
             <div className="mt-3 flex gap-2">
                 <Button className="absolute rounded-full right-0 top-0 bg-white opacity-60 hover:opacity-100 cursor-pointer">
-                    <Trash />
+                    <Trash className="absolute rounded-full left-40 top-0 text-rose-600"/>
                 </Button>
             </div>
             </div>
