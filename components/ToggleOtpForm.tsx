@@ -66,12 +66,15 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
     <Card className="w-full min-h-screen max-w-sm border-2 border-green-300 shadow-none">
       <CardHeader>
         <CardTitle>
-          {!twoFactorEnabled?"Enable Two Factor Authentication":"Disable Two Facror Suthentication"}
+          Enable/Disable two factor authentication
+          
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex justify-center items-center">
-        <label>Enable/Disable two factor authentication</label>
+        <label>
+          {!twoFactorEnabled?"Enable Two Factor Authentication":"Disable Two Facror Suthentication"}
+        </label>
         <Switch checked={twoFactorEnabled} onCheckedChange={handleChenge} />
     </div>
     <Dialog open={isOpen} onOpenChange={(open)=>setIsOpen(open)}>

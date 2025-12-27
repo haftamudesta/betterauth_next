@@ -59,8 +59,11 @@ export function SignInForm() {
         },
         {
             onSuccess:async()=>{
-            toast.success("Loged In successfully")
-            router.push("/")
+            const {error}=await authClient.twoFactor.sendOtp({})
+            if(error){
+              toast.error(error.message)
+            }
+            router.push("/auth/two_factor")
         },
         onError:(ctx)=>{
             toast(ctx.error.message)
