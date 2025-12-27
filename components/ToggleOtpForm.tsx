@@ -4,15 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
-import { Separator } from "./ui/separator"
 
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
 import {
   Field,
   FieldGroup,
@@ -22,8 +15,6 @@ import { FieldError } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 import { authClient } from "@/lib/auth-client"
-import { useRouter } from "next/navigation"
-import UploadImage from "./UploadImage"
 import { Switch } from "./ui/switch"
 import { useState } from "react"
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog"
@@ -38,7 +29,6 @@ const formSchema = z.object({
 
 export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
     const [isOpen,setIsOpen]=useState(false)
-    const router=useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -69,7 +59,7 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
 
   const isLoading = form.formState.isSubmitting
   const handleChenge=()=>{
-
+    setIsOpen(true)
   }
   return (
     <main>
