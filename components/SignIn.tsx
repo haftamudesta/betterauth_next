@@ -51,12 +51,11 @@ export function SignInForm() {
         },
         {
             onSuccess:async()=>{
-            // const {error}=await authClient.twoFactor.sendOtp({})
-            // if(error){
-            //   toast.error(error.message)
-            // }
-            // router.push("/two_factor")
-            router.push("/")
+            const {error}=await authClient.twoFactor.sendOtp({})
+            if(error){
+              toast.error(error.message)
+            }
+            router.push("/two_factor")
         },
         onError:(ctx)=>{
             toast(ctx.error.message)

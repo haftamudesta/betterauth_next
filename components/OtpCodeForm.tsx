@@ -59,7 +59,7 @@ export function OtpCOdeForm() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <form id="update_profile-form" onSubmit={form.handleSubmit(onSubmit)}>
+        <form id="otp-code-form" onSubmit={form.handleSubmit(onSubmit)}>
             <FieldGroup>
                 <Controller
                 name="code"
@@ -90,10 +90,10 @@ export function OtpCOdeForm() {
                     {isLoading ? (
                     <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Setting Otp...
+                          Verfing Otp...
                         </>
                     ) : (
-                        "Set Otp"
+                        "Verify Otp"
                       )}
                     </Button>
             </form>

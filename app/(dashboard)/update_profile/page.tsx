@@ -15,7 +15,7 @@ export default async function updateProfilePage(){
         <main className="w-full min-h-screen p-6 shadow-2xl rounded-2xl h-full flex gap-6 items-start justify-center">
             <UpdateProfile name={user.name} email={user.email} image={user.image||""} twoFactorEnabled={user.twoFactorEnabled??false}/>
             <ChangePasswordForm />
-            < ToggleOtpForm twoFactorEnabled={user.twoFactorEnabled??false}/>
+            < ToggleOtpForm twoFactorEnabled={user.twoFactorEnabled}/>
         </main>
     )
 }

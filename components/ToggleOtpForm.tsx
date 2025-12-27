@@ -127,7 +127,7 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
                     {isLoading ? (
                     <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Updating Profile...
+                          Updating 2FA...
                         </>
                     ) : (
                         <p>{!twoFactorEnabled?"Enable 2FA":"Disable 2FA"}</p>
