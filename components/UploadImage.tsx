@@ -24,12 +24,12 @@ export default function UploadImage({defaultUrl,onChange,endpoint}:uploadImagePr
         return (
             <div className="relative">
                 <div className="relative w-[100px] h-[100px] shadow-lg overflow-hidden rounded-full">
-                <Image src={value} className="object-cover" alt="" />
+                <Image src={value} className="object-cover" alt=""
+                fill />
             </div>
             <div className="mt-3 flex gap-2">
-                <Button className="absolute rounded-full right-0 top-0 bg-white opacity-60 hover:opacity-100 cursor-pointer">
-                    <Trash className="absolute rounded-full left-40 top-0 text-rose-600"/>
-                </Button>
+              <Trash className="absolute rounded-full left-40 top-0 text-rose-600 cursor-pointer"/>
+               
             </div>
             </div>
         )

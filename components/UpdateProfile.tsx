@@ -121,7 +121,7 @@ export function UpdateProfile({name,email,image}:updateProfileProps) {
               )}
             />
             <Controller
-              name="email"
+              name="image"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field>
