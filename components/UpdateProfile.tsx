@@ -71,7 +71,7 @@ export function UpdateProfile({name,email,image,twoFactorEnabled}:updateProfileP
   const isLoading = form.formState.isSubmitting
   
   return (
-    <Card className="w-full min-h-screen max-w-sm border-0 shadow-none">
+    <Card className="w-full min-h-screen max-w-sm border-2 border-sky-400 shadow-none">
       <CardHeader>
         <CardTitle>Update Your Profile</CardTitle>
       </CardHeader>

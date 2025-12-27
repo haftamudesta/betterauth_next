@@ -18,6 +18,7 @@ import { authClient } from "@/lib/auth-client"
 import { Switch } from "./ui/switch"
 import { useState } from "react"
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog"
+import { Card, CardContent,CardHeader,CardTitle, } from "./ui/card"
 
 interface ToggleOtpProps{
     twoFactorEnabled:boolean
@@ -62,7 +63,13 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
     setIsOpen(true)
   }
   return (
-    <main>
+    <Card className="w-full min-h-screen max-w-sm border-2 border-green-300 shadow-none">
+      <CardHeader>
+        <CardTitle>
+          {!twoFactorEnabled?"Enable Two Factor Authentication":"Disable Two Facror Suthentication"}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
         <div className="flex justify-center items-center">
         <label>Enable/Disable two factor authentication</label>
         <Switch checked={twoFactorEnabled} onCheckedChange={handleChenge} />
@@ -118,6 +125,7 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
             </form>
         </DialogContent>
     </Dialog>
-    </main>
+    </CardContent>
+    </Card>
   )
 }
