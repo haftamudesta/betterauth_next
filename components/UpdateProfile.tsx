@@ -4,8 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import * as z from "zod"
-import { Separator } from "./ui/separator"
-
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -38,7 +36,7 @@ const formSchema = z.object({
   image:z.string()
 })
 
-export function UpdateProfile({name,email,image}:updateProfileProps) {
+export function UpdateProfile({name,email,image,twoFactorEnabled}:updateProfileProps) {
     const router=useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -153,7 +151,7 @@ export function UpdateProfile({name,email,image}:updateProfileProps) {
                 ) : (
                     "Update Profile"
                       )}
-            </Button>
+          </Button>
         </form>
       </CardContent>
     </Card>
