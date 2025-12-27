@@ -51,7 +51,7 @@ export function SignInForm() {
     },
   })
 
-  async function  onSubmit(data: z.infer<typeof formSchema>) {
+   const  onSubmit=async(data: z.infer<typeof formSchema>) =>{
     try {
         await authClient.signIn.email({
             email:data.email,
@@ -59,15 +59,16 @@ export function SignInForm() {
         },
         {
             onSuccess:async()=>{
-            const {error}=await authClient.twoFactor.sendOtp({})
-            if(error){
-              toast.error(error.message)
-            }
-            router.push("/auth/two_factor")
+            // const {error}=await authClient.twoFactor.sendOtp({})
+            // if(error){
+            //   toast.error(error.message)
+            // }
+            // router.push("/two_factor")
+            router.push("/")
         },
         onError:(ctx)=>{
             toast(ctx.error.message)
-        }
+        },
         }
     )
     } catch (error) {
@@ -98,7 +99,7 @@ export function SignInForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+        <form id="signin-form" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Controller
               name="email"
@@ -139,12 +140,12 @@ export function SignInForm() {
                 </Field>
               )}
             />
-           
           </FieldGroup>
+          
         </form>
       </CardContent>
       <CardFooter className="flex flex-col">
-           <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-between w-full mt-4">
           <Button
             type="button"
             variant="outline"
@@ -155,9 +156,9 @@ export function SignInForm() {
           </Button>
           <Button
             type="submit"
-            form="sign-up-form"
+            form="signin-form"
             disabled={isLoading}
-            className="cursor-pointer"
+            className="cursor-pointer bg-sky-600"
           >
             {isLoading ? (
               <>

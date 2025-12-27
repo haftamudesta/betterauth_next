@@ -27,17 +27,15 @@ interface updateProfileProps{
     name:string,
     email:string,
     image:string,
-    twoFactorEnabled:boolean
 }
 
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
-  email: z.email("Please enter a valid email"),
+  email: z.string().email("Please enter a valid email"),
   image:z.string(),
-  twoFactorEnabled:Boolean,
 })
 
-export function UpdateProfile({name,email,image,twoFactorEnabled}:updateProfileProps) {
+export function UpdateProfile({name,email,image}:updateProfileProps) {
     const router=useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,7 +43,6 @@ export function UpdateProfile({name,email,image,twoFactorEnabled}:updateProfileP
       name,
       email,
       image,
-      twoFactorEnabled,
     },
   })
 
@@ -140,7 +137,7 @@ export function UpdateProfile({name,email,image,twoFactorEnabled}:updateProfileP
           </FieldGroup>
           <Button
             type="submit"
-            form="sign-up-form"
+            form="update_profile-form"
             disabled={isLoading}
             className="cursor-pointer mt-4 bg-sky-600 w-full"
             

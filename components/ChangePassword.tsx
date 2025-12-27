@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -10,30 +9,19 @@ import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
-import { Loader2 } from "lucide-react"
-import Link from "next/link"
+
 import { authClient } from "@/lib/auth-client"
 import { useRouter } from "next/navigation"
-import { Separator } from "./ui/separator"
 
 const formSchema = z.object({
   newPassword:z.string().min(8,"Enter valid password"),
@@ -84,7 +72,7 @@ const isLoading = form.formState.isSubmitting
         <CardTitle>Change Your Password</CardTitle>
       </CardHeader>
       <CardContent>
-        <form id="form-rhf-demo" onSubmit={form.handleSubmit(onSubmit)}>
+        <form id="change-password" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
             <Controller
               name="currentPassword"
@@ -127,12 +115,12 @@ const isLoading = form.formState.isSubmitting
               )}
             />
             <Controller
-              name="newPassword"
+              name="confirmNewPassword"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel>
-                   Confirm Password
+                   Confirm New Password
                   </FieldLabel>
                   <Input
                     {...field}
@@ -149,18 +137,11 @@ const isLoading = form.formState.isSubmitting
           </FieldGroup>
           <Button
             type="submit"
-            form="sign-up-form"
+            form="change-password"
             disabled={isLoading}
             className="w-full mt-4 bg-sky-600 cursor-pointer"
           >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Updating Password...
-              </>
-            ) : (
-              "Change Password"
-            )}
+            Change Password
           </Button>
         </form>
       </CardContent>
