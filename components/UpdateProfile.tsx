@@ -27,6 +27,7 @@ interface updateProfileProps{
     name:string,
     email:string,
     image:string,
+    twoFactorEnabled:Boolean
 }
 
 const formSchema = z.object({
@@ -35,7 +36,7 @@ const formSchema = z.object({
   image:z.string(),
 })
 
-export function UpdateProfile({name,email,image}:updateProfileProps) {
+export function UpdateProfile({name,email,image,twoFactorEnabled}:updateProfileProps) {
     const router=useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

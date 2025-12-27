@@ -23,7 +23,7 @@ export default function UploadImage({defaultUrl,onChange,endpoint}:uploadImagePr
     if(!showDropZone &&value){
         return (
             <div className="relative">
-                <div className="relative w-[100px] h-[100px] shadow-lg overflow-hidden rounded-full">
+                <div className="relative w-25 h-25 shadow-lg overflow-hidden rounded-full">
                 <Image src={value} className="object-cover" alt=""
                 fill />
             </div>
@@ -39,7 +39,7 @@ export default function UploadImage({defaultUrl,onChange,endpoint}:uploadImagePr
       <UploadDropzone
         endpoint={endpoint}
         content={{label:value?"Drop or click to replace the image":"Drop or click to upload an image"}}
-        appearance={{container:"rounded-xl border"}}
+        appearance={{container:"rounded-xl border",button:"!bg-sky-600 w-full"}}
         onClientUploadComplete={(res) => {
           const url=res?.[0]?.ufsUrl;
           if(url){
