@@ -12,21 +12,34 @@ export const authSession=async()=>{
         return session
 
     } catch (error) {
-        throw new Error("Authenticated failed")
+        if (error instanceof Error) {
+      throw new Error(`Authentication failed: ${error.message}`)
+    }
+    throw new Error("Authentication failed")
     }
 }
 
 export const authIsRequired=async()=>{
-    const session=await authSession();
-    if(!session){
+    try {
+        const session=await authSession();
+        if(!session){
+            redirect("/sign_in")
+        }
+        return session;
+        
+    } catch (error) {
         redirect("/sign_in")
     }
-    return session;
+    
 }
 
 export const authIsNotRequired=async()=>{
-    const session=await authSession();
-    if(session){
-        redirect("/")
+    try {
+        const session=await authSession();
+        if(session){
+            redirect("/")
+        }
+    } catch (error) {
+        return
     }
 }

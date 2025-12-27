@@ -19,6 +19,7 @@ import { Switch } from "./ui/switch"
 import { useState } from "react"
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./ui/dialog"
 import { Card, CardContent,CardHeader,CardTitle, } from "./ui/card"
+import { useRouter } from "next/navigation"
 
 interface ToggleOtpProps{
     twoFactorEnabled:boolean
@@ -29,6 +30,7 @@ const formSchema = z.object({
 })
 
 export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
+  const router=useRouter()
     const [isOpen,setIsOpen]=useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,6 +47,7 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
             toast.error(error.message)
         }
         toast.success("Two factor authentication disabled")
+        router.prefetch("/updat_profile")
       }else{
         const {error} =await authClient.twoFactor.enable({password})
         if(error){
@@ -55,6 +58,8 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
     
     } catch (error) {
       toast.error("Something went wrong!")
+    }finally{
+      setIsOpen(false)
     }
   }
 
@@ -87,7 +92,10 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
                     Please confirm your password to{" "}{!twoFactorEnabled?"Enable":"Disable"} 2FA in your account 
                 </DialogDescription>
             </DialogHeader>
-            <form id="update_profile-form" onSubmit={form.handleSubmit(onSubmit)}>
+            <form id="toggle-otp-form"
+             onSubmit={form.handleSubmit(onSubmit)}
+             className="flex flex-col gap-6"
+             >
                 <FieldGroup>
                     <Controller
                     name="password"
@@ -112,7 +120,7 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
                 </FieldGroup>
                 <Button
                 type="submit"
-                form="sign-up-form"
+                form="toggle-otp-form"
                 disabled={isLoading}
                  className="cursor-pointer mt-4 bg-sky-600 w-full"
                 >
