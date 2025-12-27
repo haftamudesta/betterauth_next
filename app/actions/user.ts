@@ -13,6 +13,7 @@ export async function updateProfile(){
             name:true,
             email:true,
             image:true,
+            twoFactorEnabled:true
         }
     })
     return user;

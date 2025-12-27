@@ -33,7 +33,8 @@ interface updateProfileProps{
 const formSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
   email: z.email("Please enter a valid email"),
-  image:z.string()
+  image:z.string(),
+  twoFactorEnabled:Boolean,
 })
 
 export function UpdateProfile({name,email,image,twoFactorEnabled}:updateProfileProps) {
@@ -44,6 +45,7 @@ export function UpdateProfile({name,email,image,twoFactorEnabled}:updateProfileP
       name,
       email,
       image,
+      twoFactorEnabled,
     },
   })
 
@@ -51,7 +53,7 @@ export function UpdateProfile({name,email,image,twoFactorEnabled}:updateProfileP
     try {
       await authClient.updateUser({
         name: data.name,
-        image: data.image
+        image: data.image,
       }, {
         onSuccess: async () => {
           toast.success("Profile updated successfully")
