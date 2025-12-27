@@ -24,8 +24,11 @@ export const auth = betterAuth({
         sendOnSignUp:true,
         autoSignInAfterVerification:true,
         sendVerificationEmail:async({user, url})=> {
+            const toEmail = process.env.DEVELOPMENT_MODE === "true" 
+        ? process.env.TEST_EMAIL || "example@gmail.com"
+        : user.email;
             await sendVerificationEmail({
-                to:user.email,
+                to:toEmail,
                 verificationUrl:url,
                 userName: user.name 
             })
@@ -47,7 +50,10 @@ export const auth = betterAuth({
          twoFactor({
           	otpOptions: {
 				async sendOTP({ user, otp }) {
-                    sendOtpEmail({to:"",otp})
+                    const toEmail = process.env.DEVELOPMENT_MODE === "true" 
+                        ? process.env.TEST_EMAIL || "example@gmail.com"
+                        : user.email;
+                    await sendOtpEmail({to:toEmail,otp})
 				},
 			},
         })

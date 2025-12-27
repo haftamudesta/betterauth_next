@@ -30,7 +30,7 @@ export const VerificationEmail = ({
         </Preview>
         <Container className="mx-auto py-5 pb-12">
 
-          <Text className="text-[16px] leading-[26px]">
+          <Text className="text-[16px] leading-6.5">
             Hi {userName},
           </Text>
           <Text className="text-[16px] leading-[26px]">
