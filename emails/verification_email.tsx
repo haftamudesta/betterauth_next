@@ -33,7 +33,7 @@ export const VerificationEmail = ({
           <Text className="text-[16px] leading-6.5">
             Hi {userName},
           </Text>
-          <Text className="text-[16px] leading-[26px]">
+          <Text className="text-[16px] leading-6.5">
             Welcome to betterAuth, thank you for signing up for {appName}.Please confirm your email by clicking the button below
           </Text>
           <Section className="text-center">
