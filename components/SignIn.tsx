@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -17,18 +16,11 @@ import {
 } from "@/components/ui/card"
 import {
   Field,
-  FieldDescription,
   FieldError,
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group"
 import { Loader2 } from "lucide-react"
 import Link from "next/link"
 import { authClient } from "@/lib/auth-client"
@@ -180,7 +172,7 @@ export function SignInForm() {
         </div>
         <div className="flex flex-col items-center justify-center w-full my-4">
           <p className="text-sm animate-ping text-pink-400">OR</p>
-        <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent"/>
+        <Separator className="my-4 h-4! bg-linear-to-r from-transparent via-gray-300 to-transparent"/>
         </div>
         <div className="flex flex-col gap-4 mt-4 w-full">
           <Button type="button" className="text-sm cursor-pointer bg-sky-800" onClick={SignInWithGoogle}>
@@ -190,7 +182,7 @@ export function SignInForm() {
           Continue with Github
         </Button>
         </div>
-        <Separator className="my-4 h-4! bg-gradient-to-r from-transparent via-gray-300 to-transparent"/>
+        <Separator className="my-4 h-4! bg-linear-to-r from-transparent via-gray-300 to-transparent"/>
       </CardFooter>
     </Card>
   )
