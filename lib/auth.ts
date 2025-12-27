@@ -15,6 +15,11 @@ export const auth = betterAuth({
         enabled:true,
         requireEmailVerification:true,
     },
+    rateLimit: {
+        enabled:true,
+        window: 60, 
+        max: 3, 
+    },
     emailVerification:{
         sendOnSignUp:true,
         autoSignInAfterVerification:true,
