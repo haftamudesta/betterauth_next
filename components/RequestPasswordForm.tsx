@@ -56,7 +56,7 @@ export function RequestPasswordForm() {
   const isLoading = form.formState.isSubmitting
  
   return (
-    <main>
+    <main className="w-full flex items-center justify-center">
         {isEmailSent ? (
             <Card className="w-full min-h-screen max-w-sm">
                 <CardHeader>
@@ -95,7 +95,7 @@ export function RequestPasswordForm() {
                            </FieldLabel>
                            <Input
                             {...field}
-                            placeholder="Enter your code"
+                            placeholder="Enter your Email"
                             aria-invalid={fieldState.invalid}
                             type="email"
                             />
