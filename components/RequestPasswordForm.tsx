@@ -58,7 +58,7 @@ export function RequestPasswordForm() {
   return (
     <main className="w-full flex items-center justify-center">
         {isEmailSent ? (
-            <Card className="w-full min-h-screen max-w-sm">
+            <Card className="w-full max-h-sm max-w-sm">
                 <CardHeader>
                     <CardTitle>
                         Check your email
