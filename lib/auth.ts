@@ -17,7 +17,7 @@ export const auth = betterAuth({
         requireEmailVerification:true,
         sendResetPassword: async ({ user, url}) => {
             const toEmail = process.env.DEVELOPMENT_MODE === "true" 
-        ? process.env.TEST_EMAIL || "haftish4516@gmail.com"
+        ? process.env.TEST_EMAIL || "sample@gmail.com"
         : user.email;
             await sendResetPasswordEmail({
                 to: toEmail,
@@ -37,7 +37,7 @@ export const auth = betterAuth({
         autoSignInAfterVerification:true,
         sendVerificationEmail:async({user, url})=> {
             const toEmail = process.env.DEVELOPMENT_MODE === "true" 
-        ? process.env.TEST_EMAIL || "haftish4516@gmail.com"
+        ? process.env.TEST_EMAIL || "sample@gmail.com"
         : user.email;
             await sendVerificationEmail({
                 to:toEmail,
