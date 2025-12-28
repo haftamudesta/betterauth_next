@@ -1,5 +1,3 @@
-"use client"
-
 import * as z from "zod"
 import { Resend } from "resend"
 import { RequestPasswordEmail } from "@/emails/request_password_email"

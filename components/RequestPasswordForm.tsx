@@ -37,7 +37,7 @@ export function RequestPasswordForm() {
 
   async function onSubmit({email}: z.infer<typeof formSchema>) {
     try {
-      await authClient.requestPasswordReset({email},{
+      await authClient.requestPasswordReset({email,redirectTo:"/reset_password"},{
         onSuccess:async()=>{
             setIsEmailSent(true)
         },
