@@ -5,6 +5,7 @@ import { db } from "./db";
 import { nextCookies } from "better-auth/next-js";
 import { sendVerificationEmail } from "./send_verification_email";
 import { sendOtpEmail } from "./send_otp_email";
+import { sendResetPasswordEmail } from "./send_reset_password_emal";
 
 
 export const auth = betterAuth({
@@ -14,7 +15,18 @@ export const auth = betterAuth({
     emailAndPassword:{
         enabled:true,
         requireEmailVerification:true,
+        sendResetPassword: async ({ user, url}) => {
+            const toEmail = process.env.DEVELOPMENT_MODE === "true" 
+        ? process.env.TEST_EMAIL || "example@gmail.com"
+        : user.email;
+            void sendResetPasswordEmail({
+                to: toEmail,
+                subject: 'Reset your password',
+                 url,
+            })
+        }
     },
+
     rateLimit: {
         enabled:true,
         window: 60, 
