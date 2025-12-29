@@ -52,7 +52,7 @@ export function OtpCOdeForm() {
   const isLoading = form.formState.isSubmitting
  
   return (
-    <Card className="w-full min-h-screen max-w-sm border-2 border-green-300 shadow-none">
+    <Card className="w-full max-w-sm border-2 border-green-300 shadow-none ">
       <CardHeader>
         <CardTitle>
             enter your otp code

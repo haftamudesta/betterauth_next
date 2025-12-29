@@ -118,7 +118,7 @@ export function SignInForm() {
                 <Field data-invalid={fieldState.invalid}>
                   <FieldLabel className="flex items-center justify-between">
                    <span>Password</span>
-                   <span className="text-blue-600 cursor-pointer rounded-sm" onClick={()=>{router.push("/request_password")}}>forgot Password</span>
+                   <Link href="/request_password" className="text-blue-600 cursor-pointer rounded-sm">forgot Password</Link>
                   </FieldLabel>
                   <Input
                     {...field}

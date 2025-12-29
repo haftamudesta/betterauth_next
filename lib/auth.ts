@@ -26,7 +26,6 @@ export const auth = betterAuth({
             })
         }
     },
-
     rateLimit: {
         enabled:true,
         window: 60, 
@@ -60,6 +59,7 @@ export const auth = betterAuth({
     },
     plugins:[nextCookies(),
          twoFactor({
+            skipVerificationOnEnable:true,
           	otpOptions: {
 				async sendOTP({ user, otp }) {
                     const toEmail = process.env.DEVELOPMENT_MODE === "true" 

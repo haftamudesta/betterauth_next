@@ -48,8 +48,7 @@ export function RequestPasswordForm() {
         
     } catch (error) {
       toast.error("Something went wrong!")
-    }finally{
-        setIsEmailSent(false)
+      setIsEmailSent(false)
     }
   }
 
@@ -69,16 +68,16 @@ export function RequestPasswordForm() {
                         A password link has been sent to your email. Please check your email.
                     </div>
                     <button onClick={()=>{router.push("/sign_in")}}
-                    className="bg-sky-400 font-semibold rounded-4xl"
+                    className="bg-sky-400 font-semibold rounded-4xl w-full p-2 mt-2"
                     >
                         Back to Sign In
                     </button>
                 </CardContent>
             </Card>
         ):(
-            <Card className="w-full min-h-screen max-w-sm border-2 border-green-300 shadow-none">
+            <Card className="w-full flex  justify-center max-w-sm border-2 border-green-300 shadow-none">
                 <CardHeader>
-                    <CardTitle>
+                    <CardTitle >
                         enter your email
                     </CardTitle>
                 </CardHeader>

@@ -47,13 +47,14 @@ export function ToggleOtpForm({twoFactorEnabled}:ToggleOtpProps) {
             toast.error(error.message)
         }
         toast.success("Two factor authentication disabled")
-        router.prefetch("/updat_profile")
+        router.refresh()
       }else{
         const {error} =await authClient.twoFactor.enable({password})
         if(error){
             toast.error(error.message)
         }
         toast.success("Two factor authentication enabled")
+        router.refresh()
       }
     
     } catch (error) {
