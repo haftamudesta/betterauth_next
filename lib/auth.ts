@@ -7,6 +7,7 @@ import { admin } from "better-auth/plugins"
 import { sendVerificationEmail } from "./send_verification_email";
 import { sendOtpEmail } from "./send_otp_email";
 import { sendResetPasswordEmail } from "./send_reset_password_emal";
+import {ac, roles} from "./permissions"
 
 
 export const auth = betterAuth({
@@ -59,7 +60,12 @@ export const auth = betterAuth({
         },
     },
     plugins:[
-        admin(),
+        admin({
+            ac,
+            roles,
+            defaultRole:"user",
+            adminRoles:["admin","superAdmin"]
+        }),
         nextCookies(),
          twoFactor({
             skipVerificationOnEnable:true,

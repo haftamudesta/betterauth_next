@@ -6,7 +6,7 @@ const statement = {
     ...defaultStatements, 
 } as const;
 
-const ac = createAccessControl(statement);
+export const ac = createAccessControl(statement);
 
 export const userRole = ac.newRole({
     user:[]
@@ -25,5 +25,4 @@ export const roles={
     admin:adminRole,
     superAdmin:superAdminRole,
 } as const
-export const accessControl = ac;
 export type roleName =keyof typeof roles
