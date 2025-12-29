@@ -25,5 +25,5 @@ export const roles={
     admin:adminRole,
     superAdmin:superAdminRole,
 } as const
-
+export const accessControl = ac;
 export type roleName =keyof typeof roles
