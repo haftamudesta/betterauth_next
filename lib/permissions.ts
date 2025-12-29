@@ -23,7 +23,7 @@ export const superAdminRole = ac.newRole({
 export const roles={
     user:userRole,
     admin:adminRole,
-    supperAdmin:superAdminRole,
+    superAdmin:superAdminRole,
 } as const
 
 export type roleName =keyof typeof roles
