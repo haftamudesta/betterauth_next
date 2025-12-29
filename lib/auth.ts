@@ -3,6 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { twoFactor } from "better-auth/plugins"
 import { db } from "./db";
 import { nextCookies } from "better-auth/next-js";
+import { admin } from "better-auth/plugins"
 import { sendVerificationEmail } from "./send_verification_email";
 import { sendOtpEmail } from "./send_otp_email";
 import { sendResetPasswordEmail } from "./send_reset_password_emal";
@@ -57,7 +58,9 @@ export const auth = betterAuth({
             prompt:"select_account",
         },
     },
-    plugins:[nextCookies(),
+    plugins:[
+        admin(),
+        nextCookies(),
          twoFactor({
             skipVerificationOnEnable:true,
           	otpOptions: {
