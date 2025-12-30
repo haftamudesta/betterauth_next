@@ -1,15 +1,45 @@
-import { updateProfile } from "@/app/actions/user";
-import { authIsRequired } from "@/lib/auth_utils";
+import { auth } from "@/lib/auth";
+import { authIsRequired, authSession } from "@/lib/auth_utils";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import UserManagementForm, { Role } from "./user_client";
 
-export default async function updateProfilePage(){
-    await authIsRequired();
-    const user=await updateProfile()
-    if(!user){
-        return redirect("/sign_in")
-    }
-    return(
-        <main className="w-full min-h-screen p-6 shadow-2xl rounded-2xl h-full flex gap-6 items-start justify-center mx-auto max-w-7xl">
-        </main>
-    )
+export default async function UserManagementPage() {
+  await authIsRequired();
+
+  const session = await authSession();
+
+  const { users } = await auth.api.listUsers({
+    query: {},
+    headers: await headers(),
+  });
+
+  const hasDeletePermission = await auth.api.userHasPermission({
+    body: {
+      userId: session?.user.id,
+      permission: {
+        user: ["delete"],
+      },
+    },
+  });
+  const formattedUsers = users
+    .map((user) => {
+      return {
+        id: user.id,
+        name: user.name,
+        role: user.role as Role,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        hasDeletePermission: hasDeletePermission.success,
+      };
+    })
+    .filter((f) => ["user", "admin"].includes(f.role as Role));
+
+  if (!users) redirect("/sign-in");
+
+  return (
+    <div className="w-full p-6 shadow-lg mx-auto max-w-7xl min-h-dvh rounded-2xl h-full flex gap-6 justify-center items-start">
+      <UserManagementForm users={formattedUsers} />
+    </div>
+  );
 }

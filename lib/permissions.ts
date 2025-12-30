@@ -1,28 +1,28 @@
-import { admin } from "better-auth/plugins";
 import { createAccessControl } from "better-auth/plugins/access";
-import { defaultStatements, adminAc } from "better-auth/plugins/admin/access";
+import { adminAc, defaultStatements } from "better-auth/plugins/admin/access";
 
 const statement = {
-    ...defaultStatements, 
+  ...defaultStatements,
 } as const;
 
 export const ac = createAccessControl(statement);
 
 export const userRole = ac.newRole({
-    user:[]
+  user: [],
 });
 
 export const adminRole = ac.newRole({
-    user:["list","create","update"]
+  user: ["list", "set-password", "update"],
 });
 
-export const superAdminRole = ac.newRole({
-   ...adminAc.statements
+export const superadminRole = ac.newRole({
+  ...adminAc.statements,
 });
 
-export const roles={
-    user:userRole,
-    admin:adminRole,
-    superAdmin:superAdminRole,
-} as const
-export type roleName =keyof typeof roles
+export const roles = {
+  user: userRole,
+  admin: adminRole,
+  superadmin: superadminRole,
+} as const;
+
+export type RoleName = keyof typeof roles;

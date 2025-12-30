@@ -9,7 +9,6 @@ import { sendOtpEmail } from "./send_otp_email";
 import { sendResetPasswordEmail } from "./send_reset_password_emal";
 import {ac, roles} from "./permissions"
 
-
 export const auth = betterAuth({
     database: prismaAdapter(db, {
         provider: "postgresql", 
