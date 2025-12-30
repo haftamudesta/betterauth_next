@@ -3,10 +3,11 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { twoFactor } from "better-auth/plugins"
 import { db } from "./db";
 import { nextCookies } from "better-auth/next-js";
+import { admin } from "better-auth/plugins"
 import { sendVerificationEmail } from "./send_verification_email";
 import { sendOtpEmail } from "./send_otp_email";
 import { sendResetPasswordEmail } from "./send_reset_password_emal";
-
+import {ac, roles} from "./permissions"
 
 export const auth = betterAuth({
     database: prismaAdapter(db, {
@@ -57,7 +58,14 @@ export const auth = betterAuth({
             prompt:"select_account",
         },
     },
-    plugins:[nextCookies(),
+    plugins:[
+        admin({
+            ac,
+            roles,
+            defaultRole:"user",
+            adminRoles:["admin","superAdmin"]
+        }),
+        nextCookies(),
          twoFactor({
             skipVerificationOnEnable:true,
           	otpOptions: {
