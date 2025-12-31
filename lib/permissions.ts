@@ -8,7 +8,7 @@ const statement = {
 export const ac = createAccessControl(statement);
 
 export const userRole = ac.newRole({
-  user: [],
+  user: ["list"], 
 });
 
 export const adminRole = ac.newRole({

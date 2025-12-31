@@ -63,7 +63,7 @@ export const auth = betterAuth({
             ac,
             roles,
             defaultRole:"user",
-            adminRoles:["admin","superAdmin"]
+            adminRoles:["admin","superadmin"]
         }),
         nextCookies(),
          twoFactor({

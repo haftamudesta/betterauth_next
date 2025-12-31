@@ -13,6 +13,7 @@ export default async function UserManagementPage() {
     query: {},
     headers: await headers(),
   });
+  console.log(users);
 
   const hasDeletePermission = await auth.api.userHasPermission({
     body: {

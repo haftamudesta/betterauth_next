@@ -28,14 +28,15 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { DataTable } from "@/components/DataTable";
+import { RoleName } from "@/lib/permissions";
 
-const ROLE_OPTIONS = ["user", "admin", "superadmin"] as const;
+const ROLE_OPTIONS = ["user", "admin", "superadmin"];
 export type Role = (typeof ROLE_OPTIONS)[number];
 
 const formSchema = z.object({
   name: z.string().min(3, "Please enter a valid name"),
   email: z.email("Please enter a valid email"),
-  role: z.enum(ROLE_OPTIONS),
+  role: z.enum(ROLE_OPTIONS, "Role is required"),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters")
@@ -45,6 +46,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function UserManagementForm({ users }: { users: UserProps }) {
+  console.log(users);
   const { isOpen, setIsOpen, user, setUser } = useUsers();
   const router = useRouter();
 
@@ -54,18 +56,20 @@ export default function UserManagementForm({ users }: { users: UserProps }) {
       name: "",
       email: "",
       password: "",
-      role: "user" as Role,
+      role: undefined,
     },
   });
 
   useEffect(() => {
     if (user) {
-      form.reset({
-        name: user.name || "",
-        email: user.email || "",
-        password: "",
-        role: (ROLE_OPTIONS.find((r) => r === user.role) || "user") as Role,
-      });
+      form.setValue("name", user.name);
+      form.setValue("email", user.email);
+      const role = ROLE_OPTIONS.find((r) => r === user.role);
+      if (role) {
+        form.setValue("role", role);
+      } else {
+        form.setValue("role", "user");
+      }
     } else {
       form.reset({
         name: "",
@@ -76,14 +80,14 @@ export default function UserManagementForm({ users }: { users: UserProps }) {
     }
   }, [user, form]);
 
-  async function onSubmit(values: FormData) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       if (!user.id) {
         await authClient.admin.createUser({
           name: values.name,
           email: values.email,
           password: values.password as string,
-          role: values.role,
+          role: values.role as Role,
         });
         toast.success("New user created successfully");
       } else {
@@ -114,7 +118,7 @@ export default function UserManagementForm({ users }: { users: UserProps }) {
       });
       router.refresh();
     }
-  }
+  };
 
   const isLoading = form.formState.isSubmitting;
   const isEditing = !!user.id;
@@ -213,7 +217,7 @@ export default function UserManagementForm({ users }: { users: UserProps }) {
                     <Select
                       onValueChange={field.onChange}
                       value={field.value}
-                      defaultValue={field.value}
+                      defaultValue={user.role}
                     >
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select role" />
